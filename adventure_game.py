@@ -1,7 +1,7 @@
 #imports
-import random
 import json
-import numpy as np
+import random
+import sys
 
 # Configuration
 MAX_HEALTH = 100
@@ -54,16 +54,16 @@ class Player:
 
 # Specialized Classes
 class Warrior(Player):
-    def __init__(self, name, health=120, inventory=STARTING_INVENTORY.copy(), base_damage=20):
-        super().__init__(name, health, inventory, base_damage)
+    def __init__(self, name, health=120, inventory=None, base_damage=20):
+        super().__init__(name, health, inventory if inventory is not None else STARTING_INVENTORY.copy(), base_damage)
         self.class_name = "Warrior"
 
     def special_ability(self):
         print("\n[Special Ability: Shield Block] You block the next attack completely!")
 
 class Mage(Player):
-    def __init__(self, name, health=80, inventory=STARTING_INVENTORY.copy(), base_damage=25):
-        super().__init__(name, health, inventory, base_damage)
+    def __init__(self, name, health=80, inventory=None, base_damage=25):
+        super().__init__(name, health, inventory if inventory is not None else STARTING_INVENTORY.copy(), base_damage)
         self.class_name = "Mage"
 
     def special_ability(self):
@@ -71,8 +71,8 @@ class Mage(Player):
         return 50
 
 class Rogue(Player):
-    def __init__(self, name, health=90, inventory=STARTING_INVENTORY.copy(), base_damage=15):
-        super().__init__(name, health, inventory, base_damage)
+    def __init__(self, name, health=90, inventory=None, base_damage=15):
+        super().__init__(name, health, inventory if inventory is not None else STARTING_INVENTORY.copy(), base_damage)
         self.class_name = "Rogue"
 
     def special_ability(self):
@@ -147,7 +147,7 @@ def encounter_enemy(players):
 
     if all(player.health <= 0 for player in players):
         print("\nYour entire team has been defeated! Game over.")
-        exit()
+        sys.exit()
 
 def explore(players):
     print("\nYou are exploring the Mystic Lands...")
